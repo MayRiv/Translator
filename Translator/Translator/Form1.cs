@@ -32,10 +32,10 @@ namespace Translator
             }
             set
             {
-                resultTextBox.Text = value;
+                resultTextBox.Invoke(new Action(() => { resultTextBox.Text = value; }));
             }
         }
-        public event EventHandler<EventArgs> TryAnalyze;
+        public event EventHandler<EventArgsTranslator> TryAnalyze;
         private void button2_Click(object sender, EventArgs e)
         {
             OpenFileDialog f = new OpenFileDialog();
@@ -48,6 +48,22 @@ namespace Translator
                 sb = sb.AppendLine(line);
             }
             sourceTextBox.Text = sb.ToString();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            char[] separator = new char[2];
+            separator[0] = '\r';
+            separator[1] = '\n';
+            
+            string[] source = Source.Split(separator);
+            string[] clearedSource = new string[source.Count() / 2];
+            for (int i = 0; i < clearedSource.Count(); i++)
+                clearedSource[i] = source[2 * i];
+
+
+            EventArgsTranslator args = new EventArgsTranslator(clearedSource, @"lexemesJeka.txt", @"separators.txt", @"syntax_states2.xml");
+            TryAnalyze.Invoke(this, args);
         }
 
         

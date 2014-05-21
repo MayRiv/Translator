@@ -10,6 +10,6 @@ namespace Translator
     {
         string Source { get; }
         string Result { get; set;}
-        event EventHandler<EventArgs> TryAnalyze;
+        event EventHandler<EventArgsTranslator> TryAnalyze;
     }
 }

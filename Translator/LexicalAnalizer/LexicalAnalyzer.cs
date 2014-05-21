@@ -34,6 +34,7 @@ namespace LexicalAnalyzerLibrary
             return !IsConst(expStart + "+1");
         }
 
+        
         private void ReadLexemTable(string fileName)
         {
             lexemesTable.AddRange(File.ReadAllLines(fileName));
@@ -42,9 +43,9 @@ namespace LexicalAnalyzerLibrary
         {
             separatorsTable.AddRange(File.ReadAllLines(fileName));
         }
-        public void ReadSourceCodeFile(string fileName)
+        public void ReadSourceCode(string[] code)
         {
-            sourceCode.AddRange(File.ReadAllLines(fileName));
+            sourceCode.AddRange(code);
             while (sourceCode.Remove(""))
             {
             }
@@ -52,6 +53,11 @@ namespace LexicalAnalyzerLibrary
             {
                 sourceCode[i] += "?";
             }
+        }
+        public void ReadSourceCodeFile(string fileName)
+        {
+            
+            ReadSourceCode(File.ReadAllLines(fileName));
         }
         public void OutInputData()
         {
