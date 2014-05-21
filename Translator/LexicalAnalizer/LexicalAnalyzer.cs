@@ -14,9 +14,9 @@ namespace LexicalAnalyzerLibrary
         private List<string> separatorsTable;
         private List<string> sourceCode;
 
-        private List<LexemeLine> outputLexemesTable;
-        private List<double> constTable;
-        private List<string> identifierTable;
+        public List<LexemeLine> outputLexemesTable;
+        public List<double> constTable;
+        public List<string> identifierTable;
         public List<LexemeLine> getOutputLexems() { return outputLexemesTable; }
         public List<string> getLexemesTable() { return lexemesTable; }
         private static bool IsIdentifier(string identifier)
@@ -34,7 +34,6 @@ namespace LexicalAnalyzerLibrary
             return !IsConst(expStart + "+1");
         }
 
-        
         private void ReadLexemTable(string fileName)
         {
             lexemesTable.AddRange(File.ReadAllLines(fileName));
@@ -56,7 +55,7 @@ namespace LexicalAnalyzerLibrary
         }
         public void ReadSourceCodeFile(string fileName)
         {
-            
+
             ReadSourceCode(File.ReadAllLines(fileName));
         }
         public void OutInputData()
@@ -143,11 +142,11 @@ namespace LexicalAnalyzerLibrary
             if (IsIdentifier(takeFirstWord(sourceCode[0])))
             {
                 outputLexemesTable.Add(new LexemeLine(0, "id: " + takeFirstWord(sourceCode[0]), identifierCode, 0));
-                //outputLexemesTable.Add(new LexemeLine(0, lexemesTable[lexemesTable.Count - 1], lexemesTable.Count - 1, null));
                 identifierTable.Add(takeFirstWord(sourceCode[0]));
+                sourceCode[0] = removeFirstWord(sourceCode[0]);
             }
 
-            sourceCode[0] = removeFirstWord(sourceCode[0]);
+
             for (int lineN = 0; lineN < sourceCode.Count; lineN++) //There was from 1
             {
                 string str = sourceCode[lineN];
@@ -176,7 +175,7 @@ namespace LexicalAnalyzerLibrary
                                 {
                                     constTable.Add(double.Parse(buffer, NumberStyles.Float, CultureInfo.InvariantCulture));
                                 }
-                                outputLexemesTable.Add(new LexemeLine(lineN + 1, "const: " + buffer, constantCode, constTable.Count));
+                                outputLexemesTable.Add(new LexemeLine(lineN + 1, buffer, constantCode, constTable.Count));
                             }
                             else
                             {
@@ -191,7 +190,7 @@ namespace LexicalAnalyzerLibrary
                                         }
                                         else
                                         {
-                                            outputLexemesTable.Add(new LexemeLine(lineN + 1, "id: " + buffer, identifierCode, identifierTable.Count));
+                                            outputLexemesTable.Add(new LexemeLine(lineN + 1, buffer, identifierCode, identifierTable.Count));
                                             identifierTable.Add(buffer);
                                         }
                                     }
@@ -209,7 +208,7 @@ namespace LexicalAnalyzerLibrary
                                     lexemN = identifierTable.IndexOf(buffer);
                                     if (lexemN >= 0)
                                     {
-                                        outputLexemesTable.Add(new LexemeLine(lineN + 1, "id: " + buffer, identifierCode, lexemN));
+                                        outputLexemesTable.Add(new LexemeLine(lineN + 1, buffer, identifierCode, lexemN));
                                     }
                                     else
                                     {
@@ -243,6 +242,41 @@ namespace LexicalAnalyzerLibrary
                     }
                 }
             }
+            if (buffer.Length != 0)
+            {
+                int lexemN = lexemesTable.IndexOf(buffer); //Проверяем буфер в таб лексем
+                if (lexemN >= 0)
+                {
+                    outputLexemesTable.Add(new LexemeLine(sourceCode.Count, buffer, lexemN, null)); //если он там есть то заносим буфер в выходную таблицу лексем
+
+                }
+                else if (IsConst(buffer))
+                {
+                    if (!constTable.Contains((double.Parse(buffer, NumberStyles.Float, CultureInfo.InvariantCulture))))
+                    {
+                        constTable.Add(double.Parse(buffer, NumberStyles.Float, CultureInfo.InvariantCulture));
+                    }
+                    outputLexemesTable.Add(new LexemeLine(sourceCode.Count, buffer, constantCode, constTable.Count));
+                }
+                else if (IsIdentifier(buffer))
+                {
+                    lexemN = identifierTable.IndexOf(buffer);
+                    if (lexemN >= 0)
+                    {
+                        outputLexemesTable.Add(new LexemeLine(sourceCode.Count, buffer, identifierCode, lexemN));
+                    }
+                }
+                else throw new Exception("Garbage at the end of source code, lexical analizer couldn't analize it");
+            }
+
+
+
+
+            lexemesTable.Add("id");
+            lexemesTable.Add("const");
+
+
+
             if (isAnalysisTrue)
             {
                 Console.WriteLine("Lexical analysis was successful !");
@@ -253,6 +287,13 @@ namespace LexicalAnalyzerLibrary
                 Console.WriteLine("Lexical analysis was UNsuccessful !");
                 return false;
             }
+
+
+
+
+
+
         }
+
     }
 }

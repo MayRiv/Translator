@@ -62,7 +62,7 @@ namespace Translator
                 clearedSource[i] = source[2 * i];
 
 
-            EventArgsTranslator args = new EventArgsTranslator(clearedSource, @"lexemesJeka.txt", @"separators.txt", @"syntax_states2.xml");
+            EventArgsTranslator args = new EventArgsTranslator(clearedSource, @"lexemesJeka.txt", @"separators.txt", @"syntax_states2.xml", @"tableofpriority.xml", @"lexemedescription.xml");
             TryAnalyze.Invoke(this, args);
         }
 
