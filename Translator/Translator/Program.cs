@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using LexicalAnalyzerLibrary;
 using SyntaxAnalyzerAutomatLibrary;
+
 namespace Translator
 {
     static class Program

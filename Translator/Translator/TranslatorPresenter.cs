@@ -7,13 +7,14 @@ using System.Threading;
 using LexicalAnalyzerLibrary;
 using SyntaxAnalyzerAutomatLibrary;
 using PolizGenerator;
+using PolizInterpretator;
 namespace Translator
 {
     class TranslatorPresenter
     {
         private ITranslatorView view;
         private LexicalAnalyzer lanalyzer;
-        private LexemeCodeHelper lexemeCodeHelper;
+        
         private SyntaxAnalyzerAutomat sanalyzer;
 
         Thread thread;
@@ -49,7 +50,8 @@ namespace Translator
                     plGenerator.GeneratePOLIZ();
 
                     string poliz = plGenerator.GetPolizAsString();
-                    int k = 4;
+                    double value = view.GetValue();
+                    PolizExecuter executer = new PolizExecuter(poliz, lanalyzer.identifierTable, lanalyzer.constTable);
                 }
             }
             catch (Exception ex)

@@ -12,6 +12,7 @@ namespace Translator
 {
     public partial class Form1 : Form, ITranslatorView
     {
+        private bool canInput = false; 
         public Form1()
         {
             InitializeComponent();
@@ -35,12 +36,25 @@ namespace Translator
                 resultTextBox.Invoke(new Action(() => { resultTextBox.Text = value; }));
             }
         }
+
+        public double GetValue()
+        {
+            canInput = true;
+            inputButton.Invoke(new Action(() => { inputButton.Enabled = true; }));
+            while (canInput)
+            { }
+            double result = double.Parse(inputTextBox.Text);
+            inputTextBox.Invoke(new Action(() => { inputTextBox.Text = "";}));
+            inputButton.Invoke(new Action(() => { inputButton.Enabled = false; }));
+            return result;
+        }
         public event EventHandler<EventArgsTranslator> TryAnalyze;
         private void button2_Click(object sender, EventArgs e)
         {
             OpenFileDialog f = new OpenFileDialog();
-            f.InitialDirectory = Environment.CurrentDirectory;
+            f.InitialDirectory = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "resourses";
             f.ShowDialog();
+            if (f.FileName == "") return;
             var lines = File.ReadAllLines(f.FileName);
             StringBuilder sb = new StringBuilder();
             foreach (string line in lines)
@@ -62,8 +76,13 @@ namespace Translator
                 clearedSource[i] = source[2 * i];
 
 
-            EventArgsTranslator args = new EventArgsTranslator(clearedSource, @"lexemesJeka.txt", @"separators.txt", @"syntax_states2.xml", @"tableofpriority.xml", @"lexemedescription.xml");
+            EventArgsTranslator args = new EventArgsTranslator(clearedSource, @"resourses\lexemesJeka.txt", @"resourses\separators.txt", @"resourses\syntax_states2.xml", @"resourses\tableofpriority.xml", @"resourses\lexemedescription.xml");
             TryAnalyze.Invoke(this, args);
+        }
+
+        private void inputButton_Click(object sender, EventArgs e)
+        {
+            canInput = false;
         }
 
         

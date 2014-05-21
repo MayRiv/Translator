@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Translator
 {
-    public interface ITranslatorView
+    public interface ITranslatorView:IInput
     {
         string Source { get; }
         string Result { get; set;}

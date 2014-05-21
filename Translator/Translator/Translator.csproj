@@ -51,6 +51,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="IInput.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ITranslatorView.cs" />
@@ -84,6 +85,10 @@
     <ProjectReference Include="..\LexicalAnalizer\LexicalAnalyzerLibrary.csproj">
       <Project>{52bba405-d82b-4c7a-bf2b-57075e08dd2b}</Project>
       <Name>LexicalAnalyzerLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PolizExecuter\PolizExecuter.csproj">
+      <Project>{4b69d29b-d8ac-42c8-8fd3-d58b17a53dc8}</Project>
+      <Name>PolizExecuter</Name>
     </ProjectReference>
     <ProjectReference Include="..\PolizGenerator\PolizGenerator.csproj">
       <Project>{32a210fc-eb8f-478c-b540-c6f550be52b4}</Project>

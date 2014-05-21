@@ -32,11 +32,13 @@
             this.resultTextBox = new System.Windows.Forms.TextBox();
             this.sourceTextBox = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
+            this.inputTextBox = new System.Windows.Forms.TextBox();
+            this.inputButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 331);
+            this.button1.Location = new System.Drawing.Point(12, 493);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(801, 23);
             this.button1.TabIndex = 0;
@@ -47,12 +49,12 @@
             // resultTextBox
             // 
             this.resultTextBox.Enabled = false;
-            this.resultTextBox.Location = new System.Drawing.Point(13, 230);
+            this.resultTextBox.Location = new System.Drawing.Point(13, 329);
             this.resultTextBox.Multiline = true;
             this.resultTextBox.Name = "resultTextBox";
             this.resultTextBox.ReadOnly = true;
             this.resultTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.resultTextBox.Size = new System.Drawing.Size(800, 95);
+            this.resultTextBox.Size = new System.Drawing.Size(800, 132);
             this.resultTextBox.TabIndex = 1;
             // 
             // sourceTextBox
@@ -61,7 +63,7 @@
             this.sourceTextBox.Multiline = true;
             this.sourceTextBox.Name = "sourceTextBox";
             this.sourceTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.sourceTextBox.Size = new System.Drawing.Size(801, 183);
+            this.sourceTextBox.Size = new System.Drawing.Size(801, 282);
             this.sourceTextBox.TabIndex = 2;
             // 
             // button2
@@ -74,11 +76,31 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // inputTextBox
+            // 
+            this.inputTextBox.Location = new System.Drawing.Point(12, 467);
+            this.inputTextBox.Name = "inputTextBox";
+            this.inputTextBox.Size = new System.Drawing.Size(654, 20);
+            this.inputTextBox.TabIndex = 4;
+            // 
+            // inputButton
+            // 
+            this.inputButton.Enabled = false;
+            this.inputButton.Location = new System.Drawing.Point(673, 467);
+            this.inputButton.Name = "inputButton";
+            this.inputButton.Size = new System.Drawing.Size(140, 23);
+            this.inputButton.TabIndex = 5;
+            this.inputButton.Text = "Input";
+            this.inputButton.UseVisualStyleBackColor = true;
+            this.inputButton.Click += new System.EventHandler(this.inputButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(825, 366);
+            this.ClientSize = new System.Drawing.Size(825, 528);
+            this.Controls.Add(this.inputButton);
+            this.Controls.Add(this.inputTextBox);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.sourceTextBox);
             this.Controls.Add(this.resultTextBox);
@@ -96,6 +118,8 @@
         private System.Windows.Forms.TextBox resultTextBox;
         private System.Windows.Forms.TextBox sourceTextBox;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox inputTextBox;
+        private System.Windows.Forms.Button inputButton;
     }
 }
 
