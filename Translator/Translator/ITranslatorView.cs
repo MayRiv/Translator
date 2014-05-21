@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using PolizInterpretator;
 namespace Translator
 {
-    public interface ITranslatorView:IInput
+    public interface ITranslatorView:IExecuterView
     {
         string Source { get; }
-        string Result { get; set;}
         event EventHandler<EventArgsTranslator> TryAnalyze;
     }
 }

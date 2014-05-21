@@ -50,8 +50,9 @@ namespace Translator
                     plGenerator.GeneratePOLIZ();
 
                     string poliz = plGenerator.GetPolizAsString();
-                    double value = view.GetValue();
-                    PolizExecuter executer = new PolizExecuter(poliz, lanalyzer.identifierTable, lanalyzer.constTable);
+                    poliz = "i input i output"; 
+                    PolizExecuter executer = new PolizExecuter(poliz, lanalyzer.identifierTable, lanalyzer.constTable,view);
+                    executer.Execute();
                 }
             }
             catch (Exception ex)
