@@ -49,7 +49,7 @@ namespace PolizInterpretator
 
                 if (result[i].Last() == ':')
                 {
-                    labelTable.Add(result[i].Remove(result[i].Length - 1), i);
+                    labelTable.Add(result[i].Remove(result[i].Length - 1), i - 1);
                     for (int j = i; j < result.Count() - 1; j++)
                         result[j] = result[j + 1];
                     sciped++;
@@ -83,77 +83,57 @@ namespace PolizInterpretator
                     operands.Push(poliz[current]);
                 else if (idTable.ContainsKey(poliz[current]))
                     operands.Push(poliz[current]);
+                else if (labelTable.ContainsKey(poliz[current]))
+                    operands.Push(poliz[current]); 
                 else ProcessOperator(poliz[current], ref operands);
                 current++;
             }
         }
         private void ProcessOperator(string operation, ref Stack<string> operands)
         {
+            double first;
+            double second;
             switch (operation)
             {
                 case "+":
                     {
-                        double first = 0;
-                        double second = 0;
-                        string arg = operands.Pop();
-                        if (idTable.ContainsKey(arg)) second = idTable[arg];
-                        else second = double.Parse(arg);
-                        arg = operands.Pop();
-                        if (idTable.ContainsKey(arg)) first = idTable[arg];
-                        else first = double.Parse(arg);
+                        
+                        prepareOperands(ref operands,out first,out second);
                         operands.Push((first + second).ToString());
                         break;
                     }
                 case "-":
                     {
-                        double first = 0;
-                        double second = 0;
-                        string arg = operands.Pop();
-                        if (idTable.ContainsKey(arg)) second = idTable[arg];
-                        else second = double.Parse(arg);
-                        arg = operands.Pop();
-                        if (idTable.ContainsKey(arg)) first = idTable[arg];
-                        else first = double.Parse(arg);
+                        
+                        prepareOperands(ref operands, out first, out second);
                         operands.Push((first - second).ToString());
                         break;
                     }
                 case "*":
                     {
-                        double first = 0;
-                        double second = 0;
-                        string arg = operands.Pop();
-                        if (idTable.ContainsKey(arg)) second = idTable[arg];
-                        else second = double.Parse(arg);
-                        arg = operands.Pop();
-                        if (idTable.ContainsKey(arg)) first = idTable[arg];
-                        else first = double.Parse(arg);
+                       
+                        prepareOperands(ref operands, out first, out second);
                         operands.Push((first * second).ToString());
                         break;
                     }
                 case "/":
                     {
-                        double first = 0;
-                        double second = 0;
-                        string arg = operands.Pop();
-                        if (idTable.ContainsKey(arg)) second = idTable[arg];
-                        else second = double.Parse(arg);
-                        arg = operands.Pop();
-                        if (idTable.ContainsKey(arg)) first = idTable[arg];
-                        else first = double.Parse(arg);
+                        prepareOperands(ref operands, out first, out second);
                         operands.Push((first / second).ToString());
                         break;
                     }
                 case "=":
                     {
-                        double second = double.Parse(operands.Pop());
-                        idTable[operands.Pop()] = second;
+                        double arg = double.Parse(operands.Pop());
+                        idTable[operands.Pop()] = arg;
                         break;
                     }
                 case "output":
                     {
                         string arg = operands.Pop();
                         if (idTable.ContainsKey(arg)) arg = idTable[arg].ToString();
-                        view.Result = view.Result += arg + Environment.NewLine;
+                        //view.Result = view.Result += arg + Environment.NewLine;
+                        view.Output(arg);
                         break;
                     }
                 case "input":
@@ -162,7 +142,75 @@ namespace PolizInterpretator
                         idTable[arg] = view.GetValue();
                         break;
                     }
+                case ">":
+                    {
+                        prepareOperands(ref operands, out first, out second);
+                        if (first > second) operands.Push("1");
+                        else operands.Push("0");
+                        break;
+                    }
+                case "<":
+                    {
+                        prepareOperands(ref operands, out first, out second);
+                        if (first < second) operands.Push("1");
+                        else operands.Push("0");
+                        break;
+                    }
+                case "<=":
+                    {
+                        prepareOperands(ref operands, out first, out second);
+                        if (first <= second) operands.Push("1");
+                        else operands.Push("0");
+                        break;
+                    }
+                case ">=":
+                    {
+                        prepareOperands(ref operands, out first, out second);
+                        if (first >= second) operands.Push("1");
+                        else operands.Push("0");
+                        break;
+                    }
+                case "==":
+                    {
+                        prepareOperands(ref operands, out first, out second);
+                        if (first == second) operands.Push("1");
+                        else operands.Push("0");
+                        break;
+                    }
+                case "!=":
+                    {
+                        prepareOperands(ref operands, out first, out second);
+                        if (first != second) operands.Push("1");
+                        else operands.Push("0");
+                        break;
+                    }
+                case "UPL":
+                    {
+                        prepareOperands(ref operands, out first, out second);
+                        string secondString = second.ToString();
+                        //secondString = secondString.Remove(secondString.Length - 3);
+                        if (first == 0) current = int.Parse(secondString);                       
+                        break;
+                    }
+                case "BP":
+                    {
+                        current = labelTable[operands.Pop()];
+                        break;
+                    }
             }
+        }
+        private void prepareOperands(ref Stack<string> operands, out double first, out double second)
+        {
+            first = 0;
+            second = 0;
+            string arg = operands.Pop();
+            if (idTable.ContainsKey(arg)) second = idTable[arg];
+            else if (labelTable.ContainsKey(arg)) second = labelTable[arg];
+            else second = double.Parse(arg);
+            arg = operands.Pop();
+            if (idTable.ContainsKey(arg)) first = idTable[arg];
+            else if (labelTable.ContainsKey(arg)) first = labelTable[arg];
+            else first = double.Parse(arg);
         }
     }
 }

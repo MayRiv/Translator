@@ -140,7 +140,7 @@ namespace SyntaxAnalyzerAutomatLibrary
            
             catch (Exception e)
             {
-                Console.WriteLine("At line " + line +  ": " + e.Message);
+                throw new Exception("At line " + line + ": " + e.Message);
             }
             
         }

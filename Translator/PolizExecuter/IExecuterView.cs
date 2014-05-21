@@ -9,6 +9,7 @@ namespace PolizInterpretator
     public interface IExecuterView
     {
         double GetValue();
-        string Result { get; set; }
+        void Output(string message);
+        //string Result { get; set; }
     }
 }

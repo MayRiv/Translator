@@ -36,6 +36,11 @@ namespace Translator
                 resultTextBox.Invoke(new Action(() => { resultTextBox.Text = value; }));
             }
         }
+        public void Output(string message)
+        {
+            resultTextBox.Invoke(new Action(() => { resultTextBox.AppendText(message + Environment.NewLine); }));
+        }
+
 
         public double GetValue()
         {

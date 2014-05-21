@@ -44,20 +44,22 @@ namespace Translator
                     sanalyzer = new SyntaxAnalyzerAutomat(e.PathToSyntaxRules, lanalyzer.getOutputLexems(), new LexemeCodeHelper(lanalyzer.getLexemesTable()));
 
                     sanalyzer.analyze();
-                    
-                    POLIZGenerator plGenerator = new POLIZGenerator(lanalyzer.outputLexemesTable, lanalyzer.getLexemesTable(),e.PathToTableOfPriority,e.PathToLexemeDescription);
+
+                    POLIZGenerator plGenerator = new POLIZGenerator(lanalyzer.outputLexemesTable, lanalyzer.getLexemesTable(), e.PathToTableOfPriority, e.PathToLexemeDescription);
 
                     plGenerator.GeneratePOLIZ();
 
                     string poliz = plGenerator.GetPolizAsString();
-                    poliz = "i input i output"; 
-                    PolizExecuter executer = new PolizExecuter(poliz, lanalyzer.identifierTable, lanalyzer.constTable,view);
+                    
+                    PolizExecuter executer = new PolizExecuter(poliz, lanalyzer.identifierTable, lanalyzer.constTable, view);
+                    //view.Output(poliz);
                     executer.Execute();
                 }
             }
             catch (Exception ex)
             {
-                view.Result = ex.Message;
+                //view.Result = ex.Message;
+                view.Output(ex.Message);
             }
         }
     }

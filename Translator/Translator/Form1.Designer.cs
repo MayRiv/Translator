@@ -59,6 +59,7 @@
             // 
             // sourceTextBox
             // 
+            this.sourceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.sourceTextBox.Location = new System.Drawing.Point(12, 41);
             this.sourceTextBox.Multiline = true;
             this.sourceTextBox.Name = "sourceTextBox";

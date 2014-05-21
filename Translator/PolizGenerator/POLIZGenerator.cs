@@ -253,6 +253,8 @@ namespace PolizGenerator
         {
             ReadPrioritiesTable(priorityTablePath);
             ReadLexemeDescription(lexemeDescriptionPath);
+            lexemes.Add("id");
+            lexemes.Add("const");
             lexemeTable = lexemTable;
             /*identifierTable = idTable;
             constTable = consTable;*/
