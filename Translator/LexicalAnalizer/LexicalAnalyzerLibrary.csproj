@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ILexicalOutputer.cs" />
     <Compile Include="LexemeCodeHelper.cs" />
     <Compile Include="LexemeLine.cs" />
     <Compile Include="LexicalAnalyzer.cs" />

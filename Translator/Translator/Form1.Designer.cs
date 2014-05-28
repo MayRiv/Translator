@@ -48,7 +48,6 @@
             // 
             // resultTextBox
             // 
-            this.resultTextBox.Enabled = false;
             this.resultTextBox.Location = new System.Drawing.Point(13, 329);
             this.resultTextBox.Multiline = true;
             this.resultTextBox.Name = "resultTextBox";

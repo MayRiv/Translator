@@ -131,14 +131,18 @@ namespace PolizInterpretator
                 case "output":
                     {
                         string arg = operands.Pop();
-                        if (idTable.ContainsKey(arg)) arg = idTable[arg].ToString();
+                        string value = arg;
+                        if (idTable.ContainsKey(arg)) value = idTable[arg].ToString();
                         //view.Result = view.Result += arg + Environment.NewLine;
-                        view.Output(arg);
+                        
+                        if (idTable.ContainsKey(arg)) view.Output(arg + " = " + value);
+                        else view.Output("const = " + arg);
                         break;
                     }
                 case "input":
                     {
                         string arg = operands.Pop();
+                        view.Output("Enter " + arg + " value!");
                         idTable[arg] = view.GetValue();
                         break;
                     }

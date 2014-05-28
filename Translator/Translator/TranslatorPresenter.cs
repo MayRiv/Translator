@@ -34,17 +34,17 @@ namespace Translator
             try
             {
                 EventArgsTranslator e = o as EventArgsTranslator;
-                lanalyzer = new LexicalAnalyzer(e.PathToLexemes, e.PathToSeparators);
+                lanalyzer = new LexicalAnalyzer(e.PathToLexemes, e.PathToSeparators,view);
                 lanalyzer.ReadSourceCode(e.Source);
                 ////lanalyzer.OutInputData();
                 if (lanalyzer.Analyze())
                 {
-                    //    //lanalyzer.OutLexemes();
-                    //    //lanalyzer.OutConstAndIdentifierTable();
+                    lanalyzer.OutLexemes();
+                    lanalyzer.OutConstAndIdentifierTable();
                     sanalyzer = new SyntaxAnalyzerAutomat(e.PathToSyntaxRules, lanalyzer.getOutputLexems(), new LexemeCodeHelper(lanalyzer.getLexemesTable()));
-
+                    ((ILexicalOutputer)view).Output(Environment.NewLine);
                     sanalyzer.analyze();
-
+                    ((ILexicalOutputer)view).Output("Syntax analyze has been succesful!" + Environment.NewLine);
                     POLIZGenerator plGenerator = new POLIZGenerator(lanalyzer.outputLexemesTable, lanalyzer.getLexemesTable(), e.PathToTableOfPriority, e.PathToLexemeDescription);
 
                     plGenerator.GeneratePOLIZ();
@@ -59,7 +59,7 @@ namespace Translator
             catch (Exception ex)
             {
                 //view.Result = ex.Message;
-                view.Output(ex.Message);
+                ((ILexicalOutputer)view).Output(ex.Message);
             }
         }
     }
